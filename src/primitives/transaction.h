@@ -205,6 +205,14 @@ private:
     void UpdateHash() const;
 
 public:
+	//BetChain special variables
+    COutPoint externalReference;
+    uint32_t externalNetworkID = 0;
+
+
+
+
+
     static const int32_t CURRENT_VERSION=1;
 
     // The local variables are made const to prevent unintended modification
@@ -232,7 +240,9 @@ public:
     inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
         READWRITE(*const_cast<int32_t*>(&this->nVersion));
         nVersion = this->nVersion;
-        READWRITE(*const_cast<std::vector<CTxIn>*>(&vin));
+        READWRITE(*const_cast<COutPoint*>(&externalReference));
+        READWRITE(*const_cast<uint32_t*>(&externalNetworkID));
+		READWRITE(*const_cast<std::vector<CTxIn>*>(&vin));
         READWRITE(*const_cast<std::vector<CTxOut>*>(&vout));
         READWRITE(*const_cast<uint32_t*>(&nLockTime));
         if (ser_action.ForRead())
