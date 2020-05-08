@@ -347,6 +347,7 @@ std::string CTransaction::ToString() const
         vin.size(),
         vout.size(),
         nLockTime);
+    str += strprintf("<ExternalRef=%s ExternalRedID=%u>\n", externalReference.ToStringShort(), externalNetworkID);
     for (unsigned int i = 0; i < vin.size(); i++)
         str += "    " + vin[i].ToString() + "\n";
     for (unsigned int i = 0; i < vout.size(); i++)

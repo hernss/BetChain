@@ -3408,18 +3408,13 @@ bool CheckBlockHeader(const CBlockHeader& block, CValidationState& state, bool f
             REJECT_INVALID, "high-hash");
 
     if (Params().IsRegTestNet()) return true;
-
-    // Version 4 header must be used after consensus.ZC_TimeStart. And never before.
-    if (block.GetBlockTime() > Params().GetConsensus().ZC_TimeStart) {
-        if(block.nVersion < 4)
-            return state.DoS(50, error("CheckBlockHeader() : block version must be above 4 after ZerocoinStartHeight"),
-            REJECT_INVALID, "block-version");
-    } else {
-        if (block.nVersion >= 4)
-            return state.DoS(50, error("CheckBlockHeader() : block version must be below 4 before ZerocoinStartHeight"),
+	
+	//Accept only genesis block with block version below 7
+    if ((block.nVersion <= 6) && (block.GetHash() != Params().GetConsensus().hashGenesisBlock)){
+            return state.DoS(50, error("CheckBlockHeader() : block version must be above 6 after ZerocoinStartHeight"),
             REJECT_INVALID, "block-version");
     }
-
+    
     return true;
 }
 
@@ -3480,7 +3475,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
     // Check that the header is valid (particularly PoW).  This is mostly
     // redundant with the call in AcceptBlockHeader.
     //if (!CheckBlockHeader(block, state, !IsPoS))
-    if (!CheckBlockHeader(block, state, fCheckPOW && !IsPos))
+    if (!CheckBlockHeader(block, state, fCheckPOW && !IsPoS))
         return state.DoS(100, error("%s : CheckBlockHeader failed", __func__), REJECT_INVALID, "bad-header", true);
 
     // All potential-corruption validation must be done before we do any
