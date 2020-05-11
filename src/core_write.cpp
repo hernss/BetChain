@@ -98,7 +98,13 @@ void TxToUniv(const CTransaction& tx, const uint256& hashBlock, UniValue& entry)
     entry.pushKV("size", (int)::GetSerializeSize(tx, SER_NETWORK, PROTOCOL_VERSION));
     entry.pushKV("locktime", (int64_t)tx.nLockTime);
 
-    UniValue vin(UniValue::VARR);
+    UniValue extRef(UniValue::VARR);
+    extRef.pushKV("txid", tx.externalReference.hash.GetHex());
+    extRef.pushKV("vout", (int64_t)tx.externalReference.n);
+    extRef.pushKV("network", (int64_t)tx.externalNetworkID);
+	entry.pushKV("externalReference", extRef);
+    
+	UniValue vin(UniValue::VARR);
     for (const CTxIn& txin : tx.vin) {
         UniValue in(UniValue::VOBJ);
         if (tx.IsCoinBase())
