@@ -206,8 +206,8 @@ private:
 
 public:
 	//BetChain special variables
-    static const COutPoint externalReference;
-    static const uint32_t externalNetworkID;
+    const COutPoint externalReference;
+    const uint32_t externalNetworkID;
 
 
 
