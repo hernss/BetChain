@@ -206,8 +206,8 @@ private:
 
 public:
 	//BetChain special variables
-    COutPoint externalReference;
-    uint32_t externalNetworkID = 0;
+    static const COutPoint externalReference;
+    static const uint32_t externalNetworkID;
 
 
 
@@ -312,6 +312,12 @@ public:
 /** A mutable version of CTransaction. */
 struct CMutableTransaction
 {
+    //BetChain special variables
+    COutPoint externalReference;
+    uint32_t externalNetworkID;
+
+
+
     int32_t nVersion;
     std::vector<CTxIn> vin;
     std::vector<CTxOut> vout;
@@ -326,6 +332,8 @@ struct CMutableTransaction
     inline void SerializationOp(Stream& s, Operation ser_action, int nType, int nVersion) {
         READWRITE(this->nVersion);
         nVersion = this->nVersion;
+        READWRITE(externalReference);
+        READWRITE(externalNetworkID);
         READWRITE(vin);
         READWRITE(vout);
         READWRITE(nLockTime);
