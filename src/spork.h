@@ -61,8 +61,7 @@ public:
 
     // override GetPublicKey - gets Params().SporkPubkey()
     const CPubKey GetPublicKey(std::string& strErrorRet) const override;
-    const CPubKey GetPublicKeyOld() const;
-
+   
     void Relay();
 
     ADD_SERIALIZE_METHODS;

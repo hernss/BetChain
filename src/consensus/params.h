@@ -41,9 +41,6 @@ struct Params {
 
     // spork keys
     std::string strSporkPubKey;
-    std::string strSporkPubKeyOld;
-    int64_t nTime_EnforceNewSporkKey;
-    int64_t nTime_RejectOldSporkKey;
 
     // height-based activations
     int height_last_PoW;
@@ -61,6 +58,8 @@ struct Params {
     int height_start_ZC_SerialRangeCheck;
     int height_start_ZC_SerialsV2;
     int height_ZC_RecalcAccumulators;
+    int height_last_externalReference;
+    int64_t nTime_last_externalReferenceCheck;
 
     // validation by-pass
     int64_t nPivxBadBlockTime;
